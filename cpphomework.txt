@@ -1,0 +1,119 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// 1.Գրել ֆունկցիա, որը տպում է զանգվածի բոլոր տարրերը՝ օգտագործելով ցուցիչներ։
+void printArray(int *arr, const int length) {
+    for (int i = 0; i < length; ++i) {
+        cout << *(arr + i);
+        if (i < length - 1) cout << " ";
+    }
+    cout << endl;
+}
+
+// 2. 2.Գրել ֆունկցիա, որը գտնում է զանգվածի մեծագույն(maximum) և փոքրագույն(minimum) տարրերը ցուցիչներով։
+void findMinMax(int *arr, const int length, int *mn, int *mx) {
+    if (length <= 0) return;
+    *mn = *mx = arr[0];
+    for (int i = 1; i < length; ++i) {
+        if (arr[i] < *mn) *mn = arr[i];
+        if (arr[i] > *mx) *mx = arr[i];
+    }
+}
+
+// 3. Գրել ֆունկցիա, որը վերադարձնում է զանգվածի բոլոր տարրերի գումարը ցուցիչների միջոցով։
+int sumArray(int *arr, const int length) {
+    int sum = 0;
+    for (int i = 0; i < length; ++i) {
+        sum += *(arr + i);}
+    return sum;
+}
+
+// 4.Գրել ֆունկցիա, որը փոխում է զանգվածի առաջին և վերջին տարրերը։
+void swapFirstLast(int *arr, const int length) {
+    if (length <= 1) return;
+    int temp = arr[0];
+    arr[0] = arr[length - 1];
+    arr[length - 1] = temp;
+}
+
+// 5.Գրել ֆունկցիա, որը տպում է զանգվածի բոլոր տարրերի հասցեները։
+void printAddresses(int *arr, const int length) {
+    for (int i = 0; i < length; ++i) {
+        cout << (arr + i) << endl;
+    }
+}
+
+//6.Գրել ֆունկցիա, որը ձախ է տեղափոխում զանգվածի բոլոր տարրերը մեկ քայլ։
+void rotateLeft(int *arr, const int length) {
+    int first = arr[0];
+    for (int i = 0; i < length - 1; ++i){
+        arr[i] = arr[i + 1];}
+    arr[length - 1] = first;
+}
+
+// 7.Գրել ֆունկցիա, որը աջ է տեղափոխում զանգվածի բոլոր տարրերը մեկ քայլ։
+void rotateRight(int *arr, const int length) {
+    int last = arr[length - 1];
+    for (int i = length - 1; i > 0; --i){
+        arr[i] = arr[i - 1];}
+    arr[0] = last;
+}
+
+// 8․Գրել ֆունկցիա, որը ստուգում է՝ արդյոք զանգվածը պալինդրոմ է (առաջից և հետևից նույնն է կարդացվում)։
+bool isPalindrome(int *arr, int n) {
+    for (int i = 0; i < n / 2; ++i) {
+        if (arr[i] != arr[n - 1 - i]) return false;
+    }
+    return true;
+}
+
+// 9.Գրել ֆունկցիա, որը փնտրում է զանգվածում որևէ թիվ և վերադարձնում նրա ինդեքսը (կամ -1, եթե չկա)։
+int searchElement(int *arr, const int length, int x) {
+    for (int i = 0; i < length; ++i) {
+        if (arr[i] == x) return i;
+    }
+    return -1;
+}
+
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    const int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "1) printArray: ";
+    printArray(arr, n);
+
+    int mn, mx;
+    findMinMax(arr, n, &mn, &mx);
+    cout << "2) min = " << mn << ", max = " << mx << endl;
+
+    cout << "3) sum = " << sumArray(arr, n) << endl;
+
+    cout << "4) swapFirstLast: ";
+    swapFirstLast(arr, n);
+    printArray(arr, n);
+    
+    swapFirstLast(arr, n);
+
+    cout << "5) addresses:" << endl;
+    printAddresses(arr, n);
+
+    cout << "6) rotateLeft: ";
+    rotateLeft(arr, n);
+    printArray(arr, n);
+    rotateRight(arr, n);
+
+    cout << "7) rotateRight: ";
+    rotateRight(arr, n);
+    printArray(arr, n);
+    rotateLeft(arr, n);
+
+    int pal[] = {1, 2, 3, 2, 1};
+    cout << "8) isPalindrome? " << (isPalindrome(pal, 5) ? "Yes" : "No") << endl;
+
+    cout << "9) searchElement 3 in arr: " << searchElement(arr, n, 3) << endl;
+    cout << "9) searchElement 99 in arr: " << searchElement(arr, n, 99) << endl;
+
+    return 0;
+}
